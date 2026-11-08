@@ -1,101 +1,658 @@
-<!doctype html>
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#e9e7df">
-<meta name="description" content="A personal photographic archive by Geo.">
-<title>GEOfry — The Personal Archive</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0b1020">
+
+<title>Geofry Mutangili | Private Photo Gallery</title>
+
 <style>
-:root{--paper:#e9e7df;--ink:#20231e;--muted:#77796f;--line:#c9c7bd;--accent:#66765b;--white:#f5f4ef}
-*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--paper);color:var(--ink);font-family:'DM Sans',sans-serif}
-button,a{font:inherit}a{color:inherit}.wrap{width:min(1440px,100% - 64px);margin:auto}
-.topbar{height:78px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between}
-.wordmark{font-size:14px;font-weight:700;letter-spacing:.19em}.wordmark span{color:var(--accent)}
-.topmeta{display:flex;gap:28px;align-items:center;font:10px 'DM Mono',monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
-.private{border:1px solid var(--line);padding:9px 12px;border-radius:30px;color:var(--ink)}
-.hero{padding:76px 0 58px;display:grid;grid-template-columns:1.2fr .8fr;gap:40px;align-items:end}
-.kicker,.micro{font:10px 'DM Mono',monospace;letter-spacing:.18em;text-transform:uppercase;color:var(--accent)}
-h1{font:500 clamp(54px,8vw,112px)/.94 'Playfair Display',serif;letter-spacing:-.045em;margin:20px 0 0}
-.hero-right{max-width:390px;justify-self:end;padding-bottom:6px}
-.hero-right p{font-size:15px;line-height:1.8;color:#66685f;margin:0 0 25px}
-.hero-link{display:inline-flex;gap:12px;align-items:center;text-decoration:none;font:11px 'DM Mono',monospace;text-transform:uppercase;letter-spacing:.12em;border-bottom:1px solid var(--accent);padding-bottom:8px}
-.hero-link b{font-size:18px;color:var(--accent);font-weight:400}
-.rule{border-top:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;padding:17px 0;margin-bottom:23px}
-.rule span{font:10px 'DM Mono',monospace;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
-.gallery{display:grid;grid-template-columns:repeat(12,1fr);gap:34px 18px;padding-bottom:90px}
-.tile{grid-column:span 4;min-width:0;cursor:pointer;border:0;padding:0;background:none;text-align:left;color:inherit}
-.tile:nth-child(1),.tile:nth-child(6){grid-column:span 7}
-.tile:nth-child(2),.tile:nth-child(7){grid-column:span 5}
-.tile:nth-child(3n){margin-top:30px}
-.imagebox{overflow:hidden;background:#d2d0c6;position:relative}
-.tile img{display:block;width:100%;height:100%;object-fit:cover;transition:transform .7s cubic-bezier(.2,.7,.2,1),filter .5s;filter:saturate(.88)}
-.tile:hover img{transform:scale(1.035);filter:saturate(1)}
-.tile:nth-child(1) .imagebox,.tile:nth-child(6) .imagebox{aspect-ratio:1.28}
-.tile:nth-child(2) .imagebox,.tile:nth-child(7) .imagebox{aspect-ratio:1.05}
-.tile:nth-child(n+3) .imagebox{aspect-ratio: .84}
-.tile:nth-child(3) .imagebox,.tile:nth-child(8) .imagebox{aspect-ratio:.95}
-.tile-meta{display:flex;justify-content:space-between;gap:12px;padding-top:12px}
-.tile-title{font:500 17px 'Playfair Display',serif}
-.tile-number{font:10px 'DM Mono',monospace;color:var(--muted);padding-top:4px}
-.endnote{border-top:1px solid var(--line);padding:26px 0 38px;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
-.endnote p{margin:0;font:10px 'DM Mono',monospace;color:var(--muted);letter-spacing:.1em;text-transform:uppercase}
-.viewer{position:fixed;inset:0;z-index:30;background:#111411f5;display:none;align-items:center;justify-content:center;padding:80px 7vw 75px}
-.viewer.open{display:flex}.viewer img{max-width:100%;max-height:100%;object-fit:contain}
-.vhead,.vfoot{position:absolute;left:28px;right:28px;display:flex;justify-content:space-between;align-items:center;color:#eae9e2}
-.vhead{top:22px}.vfoot{bottom:22px;font:10px 'DM Mono',monospace;letter-spacing:.1em;text-transform:uppercase;color:#b7b9af}
-.vactions{display:flex;gap:8px}.control{background:transparent;color:#f5f4ef;border:1px solid #ffffff55;padding:10px 14px;border-radius:2px;text-decoration:none;cursor:pointer;font-size:12px}
-.control:hover{background:#ffffff18}.nav{position:absolute;top:50%;transform:translateY(-50%);background:#ffffff12;border:1px solid #ffffff55;color:white;width:44px;height:44px;border-radius:50%;font-size:22px;cursor:pointer}
-#prev{left:18px}#next{right:18px}
-.gate{position:fixed;inset:0;z-index:50;background:var(--paper);display:flex;align-items:center;justify-content:center;padding:24px}
-.gate-card{width:min(430px,100%);text-align:center;border:1px solid var(--line);padding:48px 42px;background:#eeece5}
-.gate-logo{font:600 42px 'Playfair Display',serif;letter-spacing:-.06em}.gate-logo span{color:var(--accent)}
-.gate-card .kicker{margin-top:22px}.gate-card h2{font:500 30px 'Playfair Display',serif;margin:13px 0}
-.gate-card p{font-size:13px;line-height:1.7;color:var(--muted)}
-.gate-card input{width:100%;padding:14px 12px;border:1px solid var(--line);background:var(--white);margin:17px 0 10px;border-radius:0;font:13px 'DM Sans',sans-serif}
-.gate-card button{width:100%;border:0;background:var(--ink);color:white;padding:14px;text-transform:uppercase;letter-spacing:.12em;font:10px 'DM Mono',monospace;cursor:pointer}
-#error{min-height:18px;color:#a04438;font-size:12px;margin-top:10px}
-@media(max-width:760px){.wrap{width:calc(100% - 36px)}.topbar{height:66px}.topmeta{gap:10px}.topmeta .edition{display:none}.hero{grid-template-columns:1fr;padding:54px 0 38px;gap:25px}.hero-right{justify-self:start}.hero-right p{font-size:14px}.gallery{gap:26px 12px}.tile,.tile:nth-child(1),.tile:nth-child(2),.tile:nth-child(6),.tile:nth-child(7){grid-column:span 6}.tile:nth-child(3n){margin-top:0}.tile:nth-child(1) .imagebox,.tile:nth-child(6) .imagebox,.tile:nth-child(2) .imagebox,.tile:nth-child(7) .imagebox,.tile:nth-child(n+3) .imagebox{aspect-ratio:.78}.tile-title{font-size:15px}.viewer{padding:76px 12px}.vhead,.vfoot{left:14px;right:14px}.nav{width:36px;height:36px}#prev{left:5px}#next{right:5px}}
-@media(max-width:420px){.private{font-size:9px;padding:8px}.wordmark{font-size:12px}.gallery{gap:23px 9px}.tile-title{font-size:14px}.gate-card{padding:38px 23px}}
+:root {
+    --bg: #090e1b;
+    --panel: #111a2d;
+    --gold: #d9b76c;
+    --cream: #f6f1e7;
+    --muted: #aab4c8;
+    --line: rgba(255,255,255,.1);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background: radial-gradient(circle at 80% 0,#17223a 0,transparent 35%),var(--bg);
+    color: var(--cream);
+    font: 16px/1.6 system-ui,Segoe UI,Roboto,sans-serif;
+}
+
+header {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    background: rgba(9,14,27,.88);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--line);
+}
+
+.nav {
+    max-width: 1200px;
+    margin: auto;
+    padding: 16px 22px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.brand {
+    font-weight: 800;
+    letter-spacing: .12em;
+    font-size: 13px;
+}
+
+.brand span {
+    color: var(--gold);
+}
+
+nav a {
+    color: var(--muted);
+    text-decoration: none;
+    margin-left: 20px;
+}
+
+nav a:hover {
+    color: var(--gold);
+}
+
+.hero {
+    max-width: 1200px;
+    margin: auto;
+    padding: 90px 22px 65px;
+    display: grid;
+    grid-template-columns: 1.3fr .7fr;
+    gap: 50px;
+    align-items: center;
+}
+
+.eyebrow {
+    color: var(--gold);
+    letter-spacing: .22em;
+    text-transform: uppercase;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.hero h1 {
+    font-size: clamp(42px,7vw,84px);
+    line-height: 1.02;
+    letter-spacing: -.045em;
+    margin: 18px 0;
+}
+
+.hero h1 em {
+    font-style: normal;
+    color: var(--gold);
+}
+
+.hero p {
+    max-width: 650px;
+    color: var(--muted);
+    font-size: 18px;
+}
+
+.hero-card {
+    border: 1px solid var(--line);
+    background: linear-gradient(145deg,#1a2740,#0e1526);
+    border-radius: 24px;
+    padding: 28px;
+}
+
+.hero-card .big {
+    font-size: 48px;
+    color: var(--gold);
+    font-weight: 800;
+    line-height: 1;
+}
+
+.hero-card p {
+    font-size: 14px;
+}
+
+.actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 26px;
+}
+
+.btn {
+    border: 1px solid var(--gold);
+    padding: 12px 18px;
+    border-radius: 999px;
+    background: var(--gold);
+    color: #15120b;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.btn.secondary {
+    background: transparent;
+    color: var(--cream);
+    border-color: var(--line);
+}
+
+section {
+    max-width: 1200px;
+    margin: auto;
+    padding: 30px 22px 75px;
+}
+
+.section-head {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    margin-bottom: 25px;
+}
+
+.section-head h2 {
+    font-size: 32px;
+    margin: 6px 0;
+}
+
+.section-head p {
+    color: var(--muted);
+}
+
+.toolbar {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 24px;
+}
+
+.toolbar input,
+.toolbar select {
+    background: #10192b;
+    border: 1px solid var(--line);
+    color: var(--cream);
+    border-radius: 12px;
+    padding: 12px 14px;
+    font: inherit;
+}
+
+.toolbar input {
+    flex: 1;
+    min-width: 220px;
+}
+
+.gallery {
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    gap: 15px;
+}
+
+.photo {
+    position: relative;
+    overflow: hidden;
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    background: #10192b;
+    aspect-ratio: 4/5;
+    cursor: pointer;
+}
+
+.photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform .5s;
+    pointer-events: none;
+    user-select: none;
+    -webkit-user-drag: none;
+}
+
+.photo:hover img {
+    transform: scale(1.045);
+}
+
+.photo:after {
+    content: "";
+    position: absolute;
+    inset: 35% 0 0;
+    background: linear-gradient(transparent,rgba(0,0,0,.8));
+}
+
+.caption {
+    position: absolute;
+    bottom: 12px;
+    left: 13px;
+    right: 13px;
+    z-index: 2;
+    font-size: 13px;
+    font-weight: 600;
+    overflow-wrap: anywhere;
+}
+
+.number {
+    color: var(--gold);
+    font-size: 11px;
+    display: block;
+    letter-spacing: .1em;
+}
+
+.empty {
+    color: var(--muted);
+    padding: 35px;
+    text-align: center;
+    grid-column: 1/-1;
+}
+
+.note {
+    border: 1px solid var(--line);
+    background: #10192b;
+    border-radius: 18px;
+    padding: 22px;
+    color: var(--muted);
+    font-size: 14px;
+}
+
+.note strong {
+    color: var(--gold);
+}
+
+footer {
+    border-top: 1px solid var(--line);
+    text-align: center;
+    color: var(--muted);
+    padding: 30px 20px;
+    font-size: 13px;
+}
+
+.lightbox {
+    position: fixed;
+    inset: 0;
+    background: rgba(2,5,12,.96);
+    z-index: 50;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 25px;
+}
+
+.lightbox.open {
+    display: flex;
+}
+
+.lightbox img {
+    max-width: 92vw;
+    max-height: 82vh;
+    object-fit: contain;
+    pointer-events: none;
+    user-select: none;
+}
+
+.lightbox button {
+    position: absolute;
+    background: #182238;
+    border: 1px solid var(--line);
+    color: white;
+    border-radius: 50%;
+    width: 44px;
+    height: 44px;
+    font-size: 22px;
+    cursor: pointer;
+}
+
+.close {
+    top: 20px;
+    right: 20px;
+}
+
+.prev {
+    left: 20px;
+    top: 50%;
+}
+
+.next {
+    right: 20px;
+    top: 50%;
+}
+
+.lb-caption {
+    position: absolute;
+    bottom: 20px;
+    color: var(--muted);
+    font-size: 14px;
+}
+
+@media(max-width:900px) {
+    .gallery {
+        grid-template-columns: repeat(3,1fr);
+    }
+
+    .hero {
+        grid-template-columns: 1fr;
+        padding-top: 60px;
+    }
+}
+
+@media(max-width:600px) {
+    .gallery {
+        grid-template-columns: repeat(2,1fr);
+        gap: 10px;
+    }
+
+    .hero h1 {
+        font-size: 48px;
+    }
+
+    .photo {
+        border-radius: 12px;
+    }
+
+    .caption {
+        font-size: 12px;
+    }
+}
 </style>
 </head>
+
 <body>
-<section class="gate" id="gate"><div class="gate-card">
-  <div class="gate-logo">GEO<span>.</span></div><div class="kicker">A personal photographic archive</div>
-  <h2>Private access</h2><p>This collection is reserved for invited viewers. Enter the gallery password to continue.</p>
-  <form id="login"><input id="password" type="password" placeholder="Gallery password" autocomplete="current-password" required><button type="submit">Enter collection&nbsp; ↗</button></form><div id="error" aria-live="polite"></div>
-</div></section>
-<div id="site" hidden>
-<header class="wrap topbar"><div class="wordmark">GEO<span>.</span> / ARCHIVE</div><div class="topmeta"><span class="edition">PERSONAL COLLECTION · VOL. 01</span><span class="private">Private viewing</span></div></header>
-<main class="wrap">
-<section class="hero"><div><div class="kicker">A study in presence · 2026</div><h1>Moments,<br>kept in frame.</h1></div>
-<div class="hero-right"><p>A considered collection of personal portraits and quiet garden moments. A visual record of a day, a place, and the details worth keeping.</p><a class="hero-link" href="#collection">Explore the collection <b>↘</b></a></div></section>
-<div class="rule" id="collection"><span>Selected photographs</span><span id="total">10 frames</span></div>
-<section class="gallery" id="gallery" aria-label="Selected photographs"></section>
+
+<header>
+<div class="nav">
+<div class="brand">
+GEOFRY <span>· PRIVATE GALLERY</span>
+</div>
+
+<nav>
+<a href="#gallery">Gallery</a>
+<a href="#privacy">Privacy</a>
+</nav>
+</div>
+</header>
+
+<main>
+
+<div class="hero">
+
+<div>
+<div class="eyebrow">Personal Collection · 2026</div>
+
+<h1>
+Moments.<br>
+<em>Quietly</em> timeless.
+</h1>
+
+<p>
+A curated collection of portraits, study moments,
+and outdoor memories—presented in a clean, premium gallery.
+</p>
+
+<div class="actions">
+<a class="btn" href="#gallery">Explore Photographs ↓</a>
+<a class="btn secondary" href="#privacy">Privacy Details</a>
+</div>
+</div>
+
+<div class="hero-card">
+<div class="eyebrow">The Collection</div>
+<div class="big" id="total">30</div>
+<p>
+Photographs in this gallery<br>
+Thoughtfully arranged and protected with browser-level viewing controls.
+</p>
+</div>
+
+</div>
+
+<section id="gallery">
+
+<div class="section-head">
+<div>
+<div class="eyebrow">Selected Frames</div>
+<h2>The Photo Collection</h2>
+<p id="count">30 photographs</p>
+</div>
+</div>
+
+<div class="toolbar">
+<input id="search" type="search" placeholder="Search photo titles…">
+
+<select id="sort">
+<option value="original">Original Order</option>
+<option value="az">Name A–Z</option>
+<option value="za">Name Z–A</option>
+</select>
+</div>
+
+<div class="gallery" id="grid"></div>
+
+</section>
+
+<section id="privacy">
+
+<div class="section-head">
+<div>
+<div class="eyebrow">Respect & Protection</div>
+<h2>Viewing, Not Downloading</h2>
+</div>
+</div>
+
+<div class="note">
+<strong>Important:</strong>
+A website cannot completely prevent someone from saving an image
+they can view—screenshots, browser tools, or another device can
+still capture it.
+
+This gallery disables common right-click, drag, and save shortcuts
+as a deterrent.
+
+For stronger protection, publish smaller/watermarked previews
+and keep original high-resolution files private.
+</div>
+
+</section>
+
 </main>
-<footer class="wrap endnote"><p>GEOfry · Personal archive</p><p>Ten frames / One collection</p><p>© 2026 · Private viewing</p></footer>
+
+<footer>
+© <span id="year"></span> Geofry Mutangili · Personal Photo Gallery
+</footer>
+
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true">
+
+<button class="close" aria-label="Close">×</button>
+<button class="prev" aria-label="Previous">‹</button>
+
+<img id="large" alt="">
+
+<button class="next" aria-label="Next">›</button>
+
+<div class="lb-caption" id="lbcaption"></div>
+
 </div>
-<div class="viewer" id="viewer" role="dialog" aria-modal="true" aria-label="Photograph viewer">
-<div class="vhead"><span id="counter">01 / 10</span><div class="vactions"><a class="control" id="download" download>↓ Save image</a><button class="control" id="close">Close ×</button></div></div>
-<button class="nav" id="prev" aria-label="Previous image">‹</button><img id="large" alt=""><button class="nav" id="next" aria-label="Next image">›</button>
-<div class="vfoot"><span id="photoTitle"></span><span>← → Navigate &nbsp; · &nbsp; Esc Close</span></div>
-</div>
+
 <script>
-const GALLERY_PASSWORD="GEOFRY"; // Replace this before publishing.
-const photos=[{"src": "assets/photos/garden-edit-01.jpg", "number": "01", "title": "The Garden Edit"}, {"src": "assets/photos/among-the-palms.jpg", "number": "02", "title": "Among the Palms"}, {"src": "assets/photos/quiet-moment.jpg", "number": "03", "title": "A Quiet Moment"}, {"src": "assets/photos/tropical-lines-01.jpg", "number": "04", "title": "Tropical Lines"}, {"src": "assets/photos/natural-composition.jpg", "number": "05", "title": "Natural Composition"}, {"src": "assets/photos/green-setting-01.jpg", "number": "06", "title": "The Green Setting"}, {"src": "assets/photos/still-in-the-garden.jpg", "number": "07", "title": "Still in the Garden"}, {"src": "assets/photos/moment-to-pause.jpg", "number": "08", "title": "A Moment to Pause"}, {"src": "assets/photos/palm-garden-study.jpg", "number": "09", "title": "Palm Garden Study"}, {"src": "assets/photos/looking-ahead.jpg", "number": "10", "title": "Looking Ahead"}];
-const gate=document.getElementById('gate'),site=document.getElementById('site'),viewer=document.getElementById('viewer');
-let active=0;
-photos.forEach((p,i)=>{const b=document.createElement('button');b.className='tile';b.type='button';b.setAttribute('aria-label','Open '+p.title);
- const box=document.createElement('div');box.className='imagebox';const img=document.createElement('img');img.src=p.src;img.alt=p.title;img.loading='lazy';img.decoding='async';box.append(img);
- const meta=document.createElement('div');meta.className='tile-meta';const title=document.createElement('span');title.className='tile-title';title.textContent=p.title;const num=document.createElement('span');num.className='tile-number';num.textContent=p.number;meta.append(title,num);b.append(box,meta);b.onclick=()=>show(i);document.getElementById('gallery').append(b)});
-document.getElementById('total').textContent=photos.length+' frames';
-document.getElementById('login').addEventListener('submit',e=>{e.preventDefault();if(document.getElementById('password').value===GALLERY_PASSWORD){gate.style.display='none';site.hidden=false}else document.getElementById('error').textContent='Incorrect password. Please try again.'});
-function show(i){active=(i+photos.length)%photos.length;const p=photos[active];document.getElementById('large').src=p.src;document.getElementById('large').alt=p.title;document.getElementById('photoTitle').textContent=p.title;document.getElementById('counter').textContent=p.number+' / '+String(photos.length).padStart(2,'0');const d=document.getElementById('download');d.href=p.src;d.download=p.src.split('/').pop();viewer.classList.add('open');document.body.style.overflow='hidden'}
-function close(){viewer.classList.remove('open');document.body.style.overflow=''}
-document.getElementById('close').onclick=close;document.getElementById('prev').onclick=()=>show(active-1);document.getElementById('next').onclick=()=>show(active+1);
-document.addEventListener('keydown',e=>{if(!viewer.classList.contains('open'))return;if(e.key==='Escape')close();if(e.key==='ArrowLeft')show(active-1);if(e.key==='ArrowRight')show(active+1)});
-viewer.addEventListener('click',e=>{if(e.target===viewer)close()});
+
+const photos = [
+"01-confident-portrait.jpg",
+"02-grateful-moment.jpg",
+"03-classic-portrait.jpg",
+"04-thoughtful-presence.jpg",
+"05-personal-style.jpg",
+"06-library-portrait.jpg",
+"07-reading-and-learning.jpg",
+"08-campus-moment.jpg",
+"09-library-study.jpg",
+"10-curiosity-and-growth.jpg",
+"450.jpg",
+"451.jpg",
+"466.jpg",
+"467.jpg",
+"475.jpg",
+"478.jpg",
+"479.jpg",
+"515.jpg",
+"516.jpg",
+"517.jpg",
+"among-the-palms.jpg",
+"garden-edit-01.jpg",
+"green-setting-01.jpg",
+"looking-ahead.jpg",
+"moment-to-pause.jpg",
+"natural-composition.jpg",
+"palm-garden-study.jpg",
+"quiet-moment.jpg",
+"still-in-the-garden.jpg",
+"tropical-lines-01.jpg"
+];
+
+const grid = document.getElementById("grid");
+const search = document.getElementById("search");
+const sort = document.getElementById("sort");
+
+let current = 0;
+
+function titleOf(file) {
+    return file
+        .replace(/\.(jpg|jpeg|png|webp)$/i,"")
+        .replace(/[-_]/g," ")
+        .replace(/^\d+\s*/,"")
+        .replace(/\b\w/g,c=>c.toUpperCase());
+}
+
+function render() {
+
+    const query = search.value.toLowerCase().trim();
+
+    let list = photos.map((file,index)=>({file,index}));
+
+    list = list.filter(item =>
+        item.file.toLowerCase().includes(query) ||
+        titleOf(item.file).toLowerCase().includes(query)
+    );
+
+    if(sort.value==="az")
+        list.sort((a,b)=>titleOf(a.file).localeCompare(titleOf(b.file)));
+
+    if(sort.value==="za")
+        list.sort((a,b)=>titleOf(b.file).localeCompare(titleOf(a.file)));
+
+    document.getElementById("count").textContent =
+        `Showing ${list.length} of ${photos.length} photographs`;
+
+    grid.innerHTML="";
+
+    if(!list.length) {
+        grid.innerHTML='<div class="empty">No photographs match your search.</div>';
+        return;
+    }
+
+    list.forEach(({file,index})=>{
+
+        const card=document.createElement("div");
+        card.className="photo";
+        card.tabIndex=0;
+        card.setAttribute("role","button");
+
+        const img=document.createElement("img");
+
+        img.src="images/"+encodeURIComponent(file);
+        img.alt=titleOf(file);
+        img.loading="lazy";
+        img.draggable=false;
+
+        img.onerror=()=>{
+            img.style.opacity=".15";
+            card.style.background="linear-gradient(135deg,#17243c,#0c1425)";
+        };
+
+        const caption=document.createElement("div");
+        caption.className="caption";
+
+        caption.innerHTML=
+            `<span class="number">FRAME ${String(index+1).padStart(2,"0")}</span>
+            ${titleOf(file)}`;
+
+        card.append(img,caption);
+
+        card.onclick=()=>open(index);
+
+        card.onkeydown=e=>{
+            if(e.key==="Enter")open(index);
+        };
+
+        grid.append(card);
+    });
+}
+
+function open(index) {
+
+    current=index;
+
+    document.getElementById("large").src=
+        "images/"+encodeURIComponent(photos[index]);
+
+    document.getElementById("large").alt=titleOf(photos[index]);
+
+    document.getElementById("lbcaption").textContent=
+        titleOf(photos[index]);
+
+    document.getElementById("lightbox").classList.add("open");
+}
+
+function close() {
+
+    document.getElementById("lightbox").classList.remove("open");
+
+    document.getElementById("large").src="";
+}
+
+function move(direction) {
+
+    current=(current+direction+photos.length)%photos.length;
+
+    open(current);
+}
+
+search.addEventListener("input",render);
+sort.addEventListener("change",render);
+
+document.querySelector(".close").onclick=close;
+document.querySelector(".prev").onclick=()=>move(-1);
+document.querySelector(".next").onclick=()=>move(1);
+
+document.addEventListener("keydown",e=>{
+
+    if(e.key==="Escape")close();
+
+    if(e.key==="ArrowLeft")move(-1);
+
+    if(e.key==="ArrowRight")move(1);
+});
+
+document.getElementById("lightbox").onclick=e=>{
+
+    if(e.target.id==="lightbox")close();
+};
+
+// Discourage common image saving actions
+document.addEventListener("contextmenu",e=>e.preventDefault());
+
+document.addEventListener("dragstart",e=>e.preventDefault());
+
+document.getElementById("total").textContent=photos.length;
+
+document.getElementById("year").textContent=new Date().getFullYear();
+
+render();
+
 </script>
-</body></html>
+
+</body>
+</html>
